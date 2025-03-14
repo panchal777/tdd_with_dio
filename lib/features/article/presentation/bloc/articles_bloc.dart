@@ -22,19 +22,18 @@ class ArticlesBloc extends Bloc<ArticlesEvent, ArticlesState> {
       emit(StateLoading());
     }
 
-    await articlesUseCase.call(ArticlesParams(period: event.period)).then((
-      value,
-    ) {
-      value.fold(
-        (l) {
-          emit(ErrorState(l.errorMessage));
-        },
-        (r) {
-          allArticles = r;
-          emit(GetArticleSuccessState(_runFilter(event.text)));
-        },
-      );
-    });
+    var value = await articlesUseCase.call(
+      ArticlesParams(period: event.period),
+    );
+    value.fold(
+      (l) {
+        emit(ErrorState(l.errorMessage));
+      },
+      (r) {
+        allArticles = r;
+        emit(GetArticleSuccessState(_runFilter(event.text)));
+      },
+    );
   }
 
   List<ArticleModel> _runFilter(String text) {

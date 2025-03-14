@@ -20,4 +20,6 @@
 class RouteName {
   static const articlesPage = '/articles_page';
   static const articlesDetailsPage = '/articles_details_page';
+  static const webViewPage = '/web_view_page';
+  static const photoViewPage = '/photo_view_page';
 }
