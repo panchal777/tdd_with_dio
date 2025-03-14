@@ -5,4 +5,9 @@ class ImageConstant {
 
   //images
   static const String logo = "$_imagePath/logo.png";
+  static const String noImage = "$_imagePath/no_image.png";
+
+  //svg
+  static const String noDataDarkSvg = "$_svgPath/no_data_dark.svg";
+  static const String noDataLightSvg = "$_svgPath/no_data_light.svg";
 }
