@@ -7,10 +7,10 @@ import 'package:tdd_with_dio/features/article/domain/usecases/articles_usecase.d
 
 import '../data_sources/remote_src/remote_local.dart';
 
-class ArticleRepoImpl extends ArticleRepository {
+class ArticleRepositoryImpl extends ArticleRepository {
   ArticleRemote articleRemote;
 
-  ArticleRepoImpl(this.articleRemote);
+  ArticleRepositoryImpl(this.articleRemote);
 
   @override
   Future<Either<Failure, List<ArticleModel>>> getArticles(

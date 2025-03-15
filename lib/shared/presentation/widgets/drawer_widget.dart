@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/helper/helper.dart';
-import '../../../core/utils/injections.dart';
+import '../../../injectors/main_injector.dart';
 import '../../../main.dart';
 import '../../data_sources/app_shared_prefs.dart';
 import '../../domain/entities/language_enum.dart';
@@ -115,15 +115,17 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 onChanged: (value) {
                   if (value) {
                     // Dark
-                    sl<AppSharedPrefs>().setDarkTheme(true);
+                    MainInjector.instance<AppSharedPrefs>().setDarkTheme(true);
                   } else {
                     // Light
-                    sl<AppSharedPrefs>().setDarkTheme(false);
+                    MainInjector.instance<AppSharedPrefs>().setDarkTheme(false);
                   }
                   Provider.of<AppNotifier>(
                     context,
                     listen: false,
-                  ).updateThemeTitle(sl<AppSharedPrefs>().getIsDarkTheme());
+                  ).updateThemeTitle(
+                    MainInjector.instance<AppSharedPrefs>().getIsDarkTheme(),
+                  );
                   setState(() {});
                 },
               ),

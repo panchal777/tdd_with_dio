@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../../../../core/helper/helper.dart';
-import '../../../../core/utils/injections.dart';
 import '../../../../core/utils/string_constant.dart';
 import '../../../../shared/presentation/pages/background_page.dart';
 import '../../../../shared/presentation/widgets/app_loader.dart';
@@ -12,22 +11,17 @@ import '../../../../shared/presentation/widgets/custom_app_bar_widget.dart';
 import '../../../../shared/presentation/widgets/reload_widget.dart';
 import '../../../../shared/presentation/widgets/text_field_widget.dart';
 import '../../data/models/articles_model.dart';
-import '../../domain/usecases/articles_usecase.dart';
 import '../bloc/articles_bloc.dart';
 import '../widgets/article_card_widget.dart';
 
 class ArticlesPage extends StatefulWidget {
-  const ArticlesPage({Key? key}) : super(key: key);
+  const ArticlesPage({super.key});
 
   @override
   State<ArticlesPage> createState() => _ArticlesPageState();
 }
 
 class _ArticlesPageState extends State<ArticlesPage> {
-  final ArticlesBloc _bloc = ArticlesBloc(
-    articlesUseCase: sl<ArticlesUseCase>(),
-  );
-
   // Key for scaffold to open drawer
   final GlobalKey<ScaffoldState> _key = GlobalKey();
 
@@ -51,7 +45,7 @@ class _ArticlesPageState extends State<ArticlesPage> {
   @override
   void initState() {
     // Call event to get ny times article
-    callArticles();
+    //callArticles();
     super.initState();
   }
 
@@ -71,9 +65,9 @@ class _ArticlesPageState extends State<ArticlesPage> {
                       focusNode: _searchFocusNode,
                       hintText: /*StringConstant.search*/ 'Search',
                       onChanged: (value) {
-                        // _bloc.add(
-                        //   OnSearchingArticlesEvent((value?.trim() ?? "")),
-                        // );
+                        context.read<ArticlesBloc>().add(
+                          SearchArticleEvent((value?.trim() ?? "")),
+                        );
                       },
                       suffixIcon: IconButton(
                         padding: EdgeInsets.zero,
@@ -221,7 +215,7 @@ class _ArticlesPageState extends State<ArticlesPage> {
           // List of articles
           Expanded(
             child: BlocConsumer<ArticlesBloc, ArticlesState>(
-              bloc: _bloc,
+              bloc: context.read<ArticlesBloc>(),
               listener: (context, state) {
                 if (state is GetArticleSuccessState) {
                   nyTimesArticles.clear();
@@ -283,7 +277,7 @@ class _ArticlesPageState extends State<ArticlesPage> {
 
   // Call articles
   callArticles({bool withLoading = true}) {
-    _bloc.add(
+    context.read<ArticlesBloc>().add(
       GetArticlesEvent(
         _searchController.text.trim(),
         selectedPeriod,

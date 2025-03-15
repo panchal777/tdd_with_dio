@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:tdd_with_dio/features/article/data/models/articles_model.dart';
 import 'package:tdd_with_dio/features/article/domain/usecases/articles_usecase.dart';
@@ -12,6 +14,7 @@ class ArticlesBloc extends Bloc<ArticlesEvent, ArticlesState> {
 
   ArticlesBloc({required this.articlesUseCase}) : super(InitialState()) {
     on<GetArticlesEvent>(_getArticles);
+    on<SearchArticleEvent>(_onSearchEvent);
   }
 
   Future<void> _getArticles(
@@ -34,6 +37,14 @@ class ArticlesBloc extends Bloc<ArticlesEvent, ArticlesState> {
         emit(GetArticleSuccessState(_runFilter(event.text)));
       },
     );
+  }
+
+  // Searching event
+  _onSearchEvent(
+    SearchArticleEvent event,
+    Emitter<ArticlesState> emitter,
+  ) async {
+    emitter(SearchState(_runFilter(event.text)));
   }
 
   List<ArticleModel> _runFilter(String text) {
