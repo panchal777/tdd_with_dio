@@ -25,6 +25,9 @@ jobs:
           flutter-version: "3.29.1" # Update to latest version
           channel: stable
 
+      - name: Generate g.dart files
+        run: flutter pub run build_runner build
+
       - name: Install dependencies
         run: flutter pub get
 
