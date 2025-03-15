@@ -1,5 +1,5 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tdd_with_dio/core/utils/injections.dart';
+import 'package:tdd_with_dio/injectors/main_injector.dart';
 import 'package:tdd_with_dio/shared/data_sources/app_shared_prefs.dart';
 
 import '../../shared/domain/entities/language_enum.dart';
@@ -14,7 +14,7 @@ class Helper {
   }
 
   static bool isDarkTheme() {
-    return sl<AppSharedPrefs>().getIsDarkTheme();
+    return MainInjector.instance<AppSharedPrefs>().getIsDarkTheme();
   }
 
   /// Get Dio Header

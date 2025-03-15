@@ -10,8 +10,7 @@ import '../../data/models/articles_model.dart';
 class ArticleCardWidget extends StatefulWidget {
   final ArticleModel nyTimesModel;
 
-  const ArticleCardWidget({Key? key, required this.nyTimesModel})
-    : super(key: key);
+  const ArticleCardWidget({super.key, required this.nyTimesModel});
 
   @override
   State<ArticleCardWidget> createState() => _ArticleCardWidgetState();

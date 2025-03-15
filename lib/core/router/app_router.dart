@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tdd_with_dio/core/router/route_name.dart';
 import 'package:tdd_with_dio/features/article/data/models/articles_model.dart';
+import 'package:tdd_with_dio/features/article/presentation/bloc/articles_bloc.dart';
 import 'package:tdd_with_dio/features/intro/presentation/pages/intro_page.dart';
+import 'package:tdd_with_dio/injectors/main_injector.dart';
 
 import '../../features/article/presentation/pages/article_details_page.dart';
 import '../../features/article/presentation/pages/articles_page.dart';
@@ -26,7 +29,16 @@ class AppRouter {
         return _bindRoute(settings, IntroPage());
 
       case RouteName.articlesPage:
-        return _bindRoute(settings, ArticlesPage());
+        return _bindRoute(
+          settings,
+          BlocProvider(
+            create:
+                (context) =>
+                    MainInjector.instance<ArticlesBloc>()
+                      ..add(GetArticlesEvent('', 1)),
+            child: ArticlesPage(),
+          ),
+        );
 
       case RouteName.articlesDetailsPage:
         return _bindRoute(
